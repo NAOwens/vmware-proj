@@ -1,18 +1,14 @@
 ---
-# site.yml for vmware-proj
+# Playbook to power up or down VMware VMs
 
-- name: Project vmware-proj
+- name: VMware Power
   hosts: all
   gather_facts: no
 
   tasks:
-  - name: some role
-    include_role:
-      name: some role
-      apply:
-        tags:
-          - some tag
-    vars:
-      # add variables if needed else delete entire section
-    tags:
-      - always
+
+  - name: Look up the VM 
+  register: search_result
+  vmware.vmware_rest.vcenter_vm_info:
+    filter_names:
+    - "{{ survey_vm_name}}"
